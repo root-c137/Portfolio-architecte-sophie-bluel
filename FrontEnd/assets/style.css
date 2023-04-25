@@ -52,6 +52,7 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
 header {
 	display: flex;
@@ -97,6 +98,17 @@ nav li {
 
 li:hover {
 	color: #B1663C;
+}
+
+.MenuLink
+{
+	text-decoration: none;
+	color:#000;
+}
+
+nav .CurrentPage
+{
+	font-weight: bold;
 }
 #introduction {
 	display: flex;

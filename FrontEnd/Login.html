@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+  <meta name="description" content="">
+  <link rel="stylesheet" href="./assets/style.css">
+  <link rel="stylesheet" href="./assets/Login.css">
+
+  <title>Se connecter</title>
+</head>
+<body>
+
+  <header>
+    <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+    <nav>
+      <ul>
+        <li>projets</li>
+        <li>contact</li>
+        <li><a class="MenuLink CurrentPage" href="./Login.html">login</a></li>
+        <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  <main class="Container">
+
+    <h1 class="FormTitle">Log In</h1>
+    <form class="FormLogin" method="POST">
+
+      <div class="FormGroup">
+        <label class="FormLabel" for="Email">E-mail</label>
+        <input class="FormControl" type="text" name="Email" id="Email" />
+      </div>
+
+      <div class="FormGroup">
+        <label class="FormLabel" for="Pass">Mot de passe</label>
+        <input class="FormControl" type="text" name="Pass" id="Pass" />
+      </div>
+
+      <button class="BLogin" type="submit">Se connecter</button>
+    </form>
+
+    <a href="#" class="PassReset">Mot de passe oublié</a>
+
+
+  </main>
+
+  <footer>
+    <nav>
+      <ul>
+        <li>Mentions Légales</li>
+      </ul>
+    </nav>
+  </footer>
+</body>
+</html>
