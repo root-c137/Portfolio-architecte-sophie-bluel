@@ -36,9 +36,6 @@ let app = {
         {
             app.Projects.forEach(Project => app.createElmProjects(Project) );
         }
-
-
-
     },
     "getWorks" : () => {
         const URL = "/works";
