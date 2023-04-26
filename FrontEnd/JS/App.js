@@ -4,7 +4,30 @@ let app = {
     FilterItems : document.querySelectorAll('.FilterItem'),
     Gallery : document.querySelector('.gallery'),
     Projects : [],
+    isConnected : false,
     "init" : () => {
+
+        if(localStorage.getItem('token') )
+            app.isConnected = !app.isConnected;
+
+        if(app.isConnected)
+        {
+            const TopBar = document.querySelector('.TopBar');
+            const Header = document.getElementsByTagName("header")[0];
+            const BEditGroup = document.querySelectorAll('.BEditGroup');
+            const BEditProjects = document.querySelector('.BEditProjects');
+
+            TopBar.style.display = "flex";
+            Header.style.position = "relative";
+            Header.style.paddingTop = "40px";
+
+            BEditGroup.forEach(Elm => {
+                Elm.style.display = "flex";
+            });
+
+            BEditProjects.addEventListener('click', app.editHandler);
+            document.body.style.overflowX = "hidden";
+        }
 
         app.FilterItems.forEach(FilterItem => {
             FilterItem.addEventListener( 'click', app.FilterProject);
@@ -12,6 +35,53 @@ let app = {
 
         app.clearGallery();
         app.getWorks();
+    },
+    "editHandler" : () => {
+        console.log('edit..');
+        const ModalContainerElm = document.querySelector('.ModalContainer');
+        const PhotosList = document.querySelector('.PhotosList');
+        const CrossButton = document.querySelector('.cross');
+
+        CrossButton.addEventListener('click', app.removeModal);
+
+
+        app.Projects.forEach(P => {
+            console.log(P);
+            const PhotoListItemElm = document.createElement('div');
+            const PhotoListItemImg = document.createElement('img');
+            const DelPhotoElm = document.createElement('button');
+            const BEditElm = document.createElement('a');
+            const ImgTrashElm = document.createElement('img');
+
+
+            PhotoListItemElm.className = "PhotoList_Item";
+            PhotoListItemImg.className = "PhotoList_Item_Img";
+            BEditElm.className = "PhotoList_Item_BEdit";
+            DelPhotoElm.className = "DelPhoto";
+            ImgTrashElm.className = "Trash";
+
+            PhotoListItemImg.src = P.imageUrl;
+            ImgTrashElm.src = "assets/icons/Trash.svg";
+
+            BEditElm.textContent = "éditer";
+
+            DelPhotoElm.appendChild(ImgTrashElm);
+
+            PhotoListItemElm.appendChild(PhotoListItemImg);
+            PhotoListItemElm.appendChild(BEditElm);
+            PhotoListItemElm.appendChild(DelPhotoElm);
+
+            PhotosList.appendChild(PhotoListItemElm);
+        });
+
+
+
+
+        ModalContainerElm.style.display = "flex";
+    },
+    "removeModal" : () => {
+        const ModalContainerElm = document.querySelector('.ModalContainer');
+        ModalContainerElm.style.display = "none";
     },
     "FilterProject" : (e) => {
         const CurrentFilter = e.currentTarget;

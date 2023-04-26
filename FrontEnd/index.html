@@ -10,8 +10,22 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="assets/CSS/style.css">
 	<link rel="stylesheet" href="assets/CSS/FilterProjects.css">
+	<link rel="stylesheet" href="assets/CSS/Index_co.css">
+	<link rel="stylesheet" href="assets/CSS/ModalEdit.css">
+
+
+	<script src="https://kit.fontawesome.com/0e08c1fe84.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
+<div class="TopBar">
+	<div class="TopBarTitle">
+		<i class="fa-solid fa-pen-to-square"></i>
+		<p>Mode édition</p>
+	</div>
+	<button class="BPublish">publier les changements</button>
+</div>
+
 <header>
 	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 	<nav>
@@ -27,8 +41,16 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<div class="BEditGroup">
+				<i class="fa-solid fa-pen-to-square"></i>
+				<button class="BEdit">modifier</button>
+			</div>
 		</figure>
 		<article>
+			<div class="BEditGroup">
+				<i class="fa-solid fa-pen-to-square"></i>
+				<button class="BEdit">modifier</button>
+			</div>
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
 			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
@@ -36,7 +58,14 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="TitleAndEditButton">
+			<h2>Mes Projets</h2>
+			<div class="BEditGroup">
+				<i class="fa-solid fa-pen-to-square"></i>
+				<button class="BEdit BEditProjects">modifier</button>
+			</div>
+		</div>
+
 
 		<div class="FilterProjects">
 			<ul class="FilterProjects_Menu">
@@ -116,6 +145,27 @@
 		</ul>
 	</nav>
 </footer>
+
+<div class="ModalContainer">
+	<div class="ModalEdit">
+		<i class="fa-sharp fa-solid fa-xmark cross"></i>
+		<div class="ModalEdit_Container">
+			<h3>Gallerie photo</h3>
+			<div class="PhotosList">
+
+			</div>
+
+			<div class="ModalMenu">
+				<button class="BAddPhoto">Ajouter une photo</button>
+				<a href="#" class="BDelGallery">Supprimer la galerie</a>
+			</div>
+
+
+		</div>
+
+	</div>
+</div>
+
 
 <script type="application/javascript" src="JS/App.js"></script>
 </body>

@@ -1,0 +1,92 @@
+
+
+.TopBar
+{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    padding:20px;
+    color:#FFF;
+}
+
+.TopBarTitle, .BEditGroup, .TitleAndEditButton
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-right:10px;
+}
+.TopBarTitle i
+{
+    margin-right:10px;
+}
+
+.BPublish
+{
+    margin-left: 10px;
+    border:none;
+    padding:8px 15px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor:pointer;
+}
+
+.BEditGroup
+{
+    justify-content: start;
+    margin-bottom: 15px;
+}
+.BEditGroup i
+{
+    margin-right:10px;
+}
+.BEditGroup .BEdit
+{
+    border:none;
+    background-color: transparent;
+    cursor:pointer;
+}
+.BEditGroup .BEdit:hover
+{
+    font-weight: bold;
+}
+
+#introduction figure .BEditGroup
+{
+    width:fit-content;
+    margin-left:58px;
+    margin-top:18px;
+}
+
+.TitleAndEditButton
+{
+    position:relative;
+    width:fit-content;
+    margin:auto;
+    padding:0;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.TitleAndEditButton .BEditGroup
+{
+    position:absolute;
+    right:-140px;
+    top:10px;
+}
+.TitleAndEditButton .BEditGroup i
+{
+    margin-right: 5px;
+}
+
+.TopBar, .BEditGroup
+{
+    display: none;
+}

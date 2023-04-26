@@ -45,7 +45,10 @@ let login =
                 .then(res => {
 
                     if(res !== undefined)
+                    {
+                        localStorage.setItem("token", res.token);
                         document.location.href = "./index.html";
+                    }
                 });
     }
 }

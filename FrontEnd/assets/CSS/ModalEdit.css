@@ -1,0 +1,160 @@
+
+
+.ModalContainer
+{
+    width:100%;
+    min-height:100vh;
+    position:absolute;
+    position:fixed;
+    top:0;
+    left:0;
+    background-color: rgba(0,0,0, 0.2);
+    display: none;
+}
+.ModalEdit
+{
+    width:500px;
+    min-height:500px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 10px;
+    padding-top:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ModalEdit_Container, .PhotosList
+{
+    width:80%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.ModalEdit_Container
+{
+    position:relative;
+    border:1px solid red;
+}
+.ModalEdit h3
+{
+    width:100%;
+    text-align: center;
+    font-size: 1.3rem;
+    margin-top:40px;
+    margin-bottom:40px;
+}
+.ModalEdit .fa-sharp
+{
+    position:absolute;
+    right:30px;
+    top:30px;
+    font-size: 15px;
+    cursor:pointer;
+}
+.ModalEdit .fa-sharp:hover
+{
+    font-weight: bold;
+}
+
+
+.PhotosList
+{
+    width:100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.PhotoList_Item
+{
+    width: calc(100% / 5.9);
+    min-height: 104px;
+    margin:5px;
+    position:relative;
+    border:1px solid red;
+}
+.PhotoList_Item img
+{
+    width:100%;
+    height:100%;
+
+}
+
+.PhotoList_Item_BEdit
+{
+    text-decoration:none;
+    color:#000;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.PhotoList_Item_BEdit:hover
+{
+    text-decoration: underline;
+}
+
+
+
+.ModalMenu
+{
+    flex-direction: column;
+
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top:1px solid #B3B3B3;
+    margin-top:30px;
+    padding-top: 28px;
+    padding-bottom: 38px;
+
+}
+
+.BAddPhoto
+{
+    border:none;
+    background-color: #1D6154;
+    padding:8px 35px;
+    color:#fff;
+    margin:10px;
+    font-size: 1.1rem;
+    border-radius: 60px;
+    cursor:pointer;
+}
+.BAddPhoto:hover
+{
+    background-color: #0E2F28;
+}
+.BDelGallery
+{
+    text-decoration: none;
+    color:#D65353;
+    font-size: 0.9rem;
+    margin-top:10px;
+}
+
+.PhotoList_Item .DelPhoto
+{
+    background-color: #000;
+    border:none;
+    width:17px;
+    height:17px;
+    border-radius: 2px;
+    padding:5px;
+    display: flex;
+    align-items: center;
+    position:absolute;
+    right:5px;
+    top:6px;
+}
+.Trash
+{
+    width:9px;
+    height:9px;
+}
