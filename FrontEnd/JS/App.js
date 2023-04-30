@@ -63,26 +63,20 @@ let app = {
         if(Image.src !== null && TitleInput.value.length > 0 &&
             Category.options.selectedIndex > 0)
         {
+            console.log(TitleInput.value.toString());
 
-            console.log(Image.files[0]);
             let formD = new FormData();
-            formD.append("imageUrl", Image.files[0]);
-            formD.append("title", TitleInput.value);
-            formD.append("categoryId", Category.options.selectedIndex);
-            formD.append("userId", 1);
+            formD.append("image", Image.files[0]);
+            formD.append("title", TitleInput.value.toString());
+            formD.append("category", Category.options.selectedIndex.toString());
 
-
-            const Data = {
-                'imageUrl' : Image.files[0],
-                'title' : TitleInput.value,
-                'categoryId' : Category.options.selectedIndex,
-                'userId' : 1
-            };
 
             const URL = "/works";
             const Method = "POST";
 
-            //Fail...
+            app.fetchAPI(URL, Method, formD, app.Token, "multipart/form-data").then(res => {
+                console.log(res);
+            });
 
         }
         else
@@ -282,14 +276,13 @@ let app = {
     "clearGallery" : () => {
         app.Gallery.innerHTML = '';
     },
-    "fetchAPI" : (URL, Method, Data = null, Token = null) => {
+    "fetchAPI" : (URL, Method, Data = null, Token = null, ContentType = "application/json") => {
 
         const CurrentURL = app.URL_API_Base+URL;
-        const Body = JSON.stringify(Data);
+        const Body = Data;
         const Header = {
             'Accept' : 'application/json',
-            'Content-Type' : 'application/json',
-            'Authorization': 'Bearer '+Token
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4Mjg4MTUzNywiZXhwIjoxNjgyOTY3OTM3fQ.fxpsORj5AWoe80mbY_ZtH56A1eLFNOM6zixDFyRJLhQ',
         }
 
         let initGET = {
