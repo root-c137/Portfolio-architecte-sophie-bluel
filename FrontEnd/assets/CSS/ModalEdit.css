@@ -32,8 +32,8 @@
     width:89%;
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    align-items: center;
+    align-content: center;
 }
 .ModalEdit_Container
 {
@@ -46,34 +46,42 @@
 {
     width:100%;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     margin-top:40px;
     margin-bottom:40px;
 }
-.Cross
+
+.ModalCrossAndArrow
 {
-    position:absolute;
-    right:30px;
-    top:30px;
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.Cross, .LeftArrow
+{
     font-size: 20px;
     cursor:pointer;
-    z-index: 10;
 }
-.Cross:hover
+.Cross:hover, .LeftArrow:hover
 {
     font-weight: bold;
 }
 
 
+
 .PhotosList
 {
-    width:89%;
+    width:85%;
     min-height: 400px;
     height:400px;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: flex-start;
     align-content: flex-start;
+    margin:auto;
+    padding-left: 50px;
     padding-bottom: 50px;
     border-bottom: 1px solid #B3B3B3;
 }
@@ -124,7 +132,6 @@
     background-color: #1D6154;
     padding:8px 35px;
     color:#fff;
-    margin:10px;
     font-size: 1.1rem;
     border-radius: 60px;
     cursor:pointer;
@@ -160,4 +167,146 @@
 {
     width:9px;
     height:9px;
+}
+
+
+
+
+
+.AddProjectSectionModal
+{
+    width:420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.AddProjectSectionModal form
+{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 40px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #B3B3B3;
+}
+.UploadSection
+{
+    width:100%;
+    background-color: #E8F1F6;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.UploadSection img
+{
+    margin-bottom: 20px;
+}
+.UploadSection input[type="file"]
+{
+    display: none;
+}
+.UploadSection label
+{
+    padding:10px 33px;
+    background-color: #CBD6DC;
+    color:#306685;
+    border-radius: 50px;
+    cursor: pointer;
+}
+.UploadSection label:hover
+{
+    background-color: #1D6154;
+    color:#fff;
+}
+
+.ButtonUploadGroup
+{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.ImagePreview
+{
+    position:absolute;
+    top:0;
+    left:50%;
+    transform: translate(-50%, 0);
+    object-fit: cover;
+    height:100%;
+    display: none;
+}
+.ButtonUploadGroup_Info
+{
+    font-size: 0.66rem;
+    margin-top:10px;
+    color:#444444;
+}
+
+.FormGroup
+{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top:15px;
+}
+.FormGroup input, .FormGroup select
+{
+    width:100%;
+    height:51px;
+    border:none;
+    outline:none;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    font-size: 1.1rem;
+    padding-left:10px;
+}
+.FormGroup label
+{
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.AddProjectSectionModal button[type="submit"]
+{
+    width:50%;
+    padding:10px 49px;
+    color:#fff;
+    border:none;
+    border-radius: 60px;
+    margin-top:20px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #1D6154;
+}
+.AddProjectSectionModal button[type="submit"]:disabled
+{
+    cursor: initial;
+    background-color: #A7A7A7;
+}
+.AddProjectSectionModal button[type="submit"]:not(:disabled):hover
+{
+    background-color: #0E2F28;
+}
+
+
+.LeftArrow
+{
+    visibility: hidden;
+}
+
+.AddProjectSectionModal
+{
+    display: none;
 }

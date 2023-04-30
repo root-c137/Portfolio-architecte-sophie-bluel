@@ -4,6 +4,8 @@
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://kit.fontawesome.com/0e08c1fe84.js" crossorigin="anonymous"></script>
+
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
@@ -13,8 +15,6 @@
 	<link rel="stylesheet" href="assets/CSS/Index_co.css">
 	<link rel="stylesheet" href="assets/CSS/ModalEdit.css">
 
-
-	<script src="https://kit.fontawesome.com/0e08c1fe84.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -144,17 +144,55 @@
 
 <div class="ModalContainer">
 	<div class="ModalEdit">
-		<i class="fa-sharp fa-solid fa-xmark Cross"></i>
 		<div class="ModalEdit_Container">
-			<h3>Gallerie photo</h3>
-			<div class="PhotosList">
+			<div class="ModalCrossAndArrow">
+				<i class="fa fa-sharp fa-light fa-arrow-left-long LeftArrow"></i>
+				<i class="fa-sharp fa-solid fa-xmark Cross"></i>
+			</div>
+			<div class="GallerySectionModal">
+				<h3>Gallerie photo</h3>
+				<div class="PhotosList">
+				</div>
+
+				<div class="ModalMenu">
+					<button class="BAddPhoto">Ajouter une photo</button>
+					<a href="#" class="BDelGallery">Supprimer la galerie</a>
+				</div>
 			</div>
 
-			<div class="ModalMenu">
-				<button class="BAddPhoto">Ajouter une photo</button>
-				<a href="#" class="BDelGallery">Supprimer la galerie</a>
-			</div>
+			<div class="AddProjectSectionModal">
+				<h3>Ajout photo</h3>
+				<form method="post" class="FormNewProject">
+					<div class="UploadSection">
+						<img src="assets/icons/picture.svg" alt="icon photo"/>
+						<img class="ImagePreview" />
+						<div class="ButtonUploadGroup">
+							<input type="file" name="Photo" id="Photo" accept="image/png, image/jpeg"
+								   onchange="app.imageUpload(event)"/>
+							<label for="Photo">+ Ajouter photo</label>
+							<p class="ButtonUploadGroup_Info">jpg, png : 4mo max</p>
+						</div>
+					</div>
 
+					<div class="FormGroup">
+						<label for="Title">Titre</label>
+						<input type="text" name="Title" id="Title"/>
+					</div>
+
+					<div class="FormGroup">
+						<label for="Category">Catégorie</label>
+						<select name="Category" id="Category">
+							<option disabled selected value></option>
+							<option value="Objet">Objet</option>
+							<option value="Appartements">Appartemens</option>
+							<option value="Hôtels & restaurants">Hôtels & restaurants</option>
+						</select>
+					</div>
+				</form>
+				<button class="BSubmitProject" type="submit" disabled>Valider</button>
+
+
+			</div>
 
 		</div>
 

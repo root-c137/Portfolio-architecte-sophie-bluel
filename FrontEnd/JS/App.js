@@ -7,6 +7,13 @@ let app = {
     Categories : [],
     CurrentCategory : "Tous",
     isConnected : false,
+    LeftArrow : document.querySelector('.LeftArrow'),
+    GallerySectionModal : document.querySelector('.GallerySectionModal'),
+    AddProjectSectionModal : document.querySelector('.AddProjectSectionModal'),
+    BAddPhoto : document.querySelector('.BAddPhoto'),
+    Token : localStorage.getItem('token'),
+    UserId : localStorage.getItem('userId'),
+    Src : null,
     "init" : () => {
 
         if(localStorage.getItem('token') )
@@ -28,14 +35,75 @@ let app = {
             });
 
             BEditProjects.addEventListener('click', app.editHandler);
+            app.BAddPhoto.addEventListener('click', app.addPhotoForm);
             document.body.style.overflowX = "hidden";
         }
-
 
 
         app.clearGallery();
         app.getCategories();
         app.getWorks();
+    },
+    "addPhotoForm" : () => {
+        app.GallerySectionModal.style.display = "none";
+        app.AddProjectSectionModal.style.display = "flex";
+        app.LeftArrow.style.visibility = "visible";
+
+        const BSubmitProject = document.querySelector('.BSubmitProject');
+        BSubmitProject.addEventListener('click', app.addNewProject);
+
+
+        console.log('add');
+    },
+    "addNewProject" : () => {
+        const Image = document.querySelector('#Photo');
+        const TitleInput = document.querySelector('#Title');
+        const Category = document.querySelector('#Category');
+
+        if(Image.src !== null && TitleInput.value.length > 0 &&
+            Category.options.selectedIndex > 0)
+        {
+
+            console.log(Image.files[0]);
+            let formD = new FormData();
+            formD.append("imageUrl", Image.files[0]);
+            formD.append("title", TitleInput.value);
+            formD.append("categoryId", Category.options.selectedIndex);
+            formD.append("userId", 1);
+
+
+            const Data = {
+                'imageUrl' : Image.files[0],
+                'title' : TitleInput.value,
+                'categoryId' : Category.options.selectedIndex,
+                'userId' : 1
+            };
+
+            const URL = "/works";
+            const Method = "POST";
+
+            //Fail...
+
+        }
+        else
+        console.log('il faut remplir les champs..');
+    },
+    "imageUpload" : (e) => {
+        if(e.target.files.length > 0)
+        {
+            console.log(e.target.files);
+            let src = URL.createObjectURL(e.target.files[0]);
+            app.Src = e.target.files[0];
+            let PreviewImgElm = document.querySelector('.ImagePreview');
+            const BUploadGroup = document.querySelector('.ButtonUploadGroup');
+            const BSumbitProject = document.querySelector('.BSubmitProject');
+
+            PreviewImgElm.style.display = "block";
+            PreviewImgElm.src = src;
+            PreviewImgElm.alt = e.target.files[0].name;
+            BUploadGroup.style.display = "none";
+            BSumbitProject.disabled = false;
+        }
     },
     "editHandler" : () => {
         const ModalContainerElm = document.querySelector('.ModalContainer');
@@ -43,6 +111,7 @@ let app = {
         const CrossButton = document.querySelector('.Cross');
 
         CrossButton.addEventListener('click', app.removeModal);
+        app.LeftArrow.addEventListener('click', app.removeAddProjectSection);
 
 
         app.Projects.forEach(P => {
@@ -82,6 +151,11 @@ let app = {
 
         ModalContainerElm.style.display = "flex";
     },
+    "removeAddProjectSection" : () => {
+        app.GallerySectionModal.style.display = "block";
+        app.AddProjectSectionModal.style.display = "none";
+        app.LeftArrow.style.visibility = "hidden";
+    },
     "removeAllProjects" : (e) => {
         e.preventDefault();
 
@@ -110,7 +184,12 @@ let app = {
                     app.Projects.splice(index, 1);
             })
 
+        const Method = "DELETE";
+        const URL = "/works/"+idCurrentElm;
 
+        app.fetchAPI(URL, Method, null, app.Token).then(res => {
+            console.log(res);
+        });
 
         app.clearGallery();
         app.FilterProject(app.CurrentCategory);
@@ -210,7 +289,7 @@ let app = {
         const Header = {
             'Accept' : 'application/json',
             'Content-Type' : 'application/json',
-            'Authorization': 'bearer '+Token
+            'Authorization': 'Bearer '+Token
         }
 
         let initGET = {
@@ -220,18 +299,17 @@ let app = {
         let initPOST = {
             method : Method,
             headers : Header,
-            body : Body,
-            mode : 'cors'
+            body : Body
         }
 
         let Init = initGET;
-        if(Data !== null)
+        if(Data !== null) {
             Init = initPOST;
+        }
 
         return fetch(CurrentURL, Init)
-            .then(res => res.json() )
             .then(res => {
-                return res;
+                return res.json();
             })
     }
 }

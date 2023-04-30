@@ -47,6 +47,7 @@ let login =
                     if(res !== undefined)
                     {
                         localStorage.setItem("token", res.token);
+                        localStorage.setItem("userId", res.userId);
                         document.location.href = "./index.html";
                     }
                 });
