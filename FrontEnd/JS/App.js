@@ -51,6 +51,7 @@ let app = {
             const DelPhotoElm = document.createElement('button');
             const BEditElm = document.createElement('a');
             const ImgTrashElm = document.createElement('img');
+            const BDeleteAllProject = document.querySelector('.BDelGallery');
 
 
             PhotoListItemElm.className = "PhotoList_Item";
@@ -73,9 +74,21 @@ let app = {
             PhotoListItemElm.id = P.id;
 
             PhotosList.appendChild(PhotoListItemElm);
+
+            BDeleteAllProject.addEventListener('click', app.removeAllProjects);
+
+
         });
 
         ModalContainerElm.style.display = "flex";
+    },
+    "removeAllProjects" : (e) => {
+        e.preventDefault();
+
+        app.Projects = [];
+        app.clearGallery();
+        app.FilterProject(app.CurrentCategory);
+        document.querySelector('.PhotosList').innerHTML = '';
     },
     "removeModal" : () => {
         const ModalContainerElm = document.querySelector('.ModalContainer');
@@ -85,18 +98,23 @@ let app = {
         ModalContainerElm.style.display = "none";
     },
     "removeProject" : (e) => {
-        let idCurrentElm = parseInt(e.currentTarget.parentElement.id);
-        const NbProjects = app.Projects.childElementCount;
 
-        console.log(idCurrentElm);
-        e.currentTarget.parentElement.parentNode.removeChild(e.currentTarget.parentElement);
-        app.Projects.forEach((P, index) => {
-            if(P.id === idCurrentElm)
-                app.Projects.splice(index, 1);
-        })
+
+            let idCurrentElm = parseInt(e.currentTarget.parentElement.id);
+            const NbProjects = app.Projects.childElementCount;
+
+            console.log(idCurrentElm);
+            e.currentTarget.parentElement.parentNode.removeChild(e.currentTarget.parentElement);
+            app.Projects.forEach((P, index) => {
+                if (P.id === idCurrentElm)
+                    app.Projects.splice(index, 1);
+            })
+
+
 
         app.clearGallery();
         app.FilterProject(app.CurrentCategory);
+
     },
     "FilterProject" : (CatName) => {
 
