@@ -282,7 +282,7 @@ let app = {
         const Body = Data;
         const Header = {
             'Accept' : 'application/json',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4Mjg4MTUzNywiZXhwIjoxNjgyOTY3OTM3fQ.fxpsORj5AWoe80mbY_ZtH56A1eLFNOM6zixDFyRJLhQ',
+            'Authorization': 'Bearer '+Token
         }
 
         let initGET = {
