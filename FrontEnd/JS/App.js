@@ -4,6 +4,8 @@ let app = {
     FilterItems : document.querySelectorAll('.FilterItem'),
     Gallery : document.querySelector('.gallery'),
     Projects : [],
+    Categories : [],
+    CurrentCategory : "Tous",
     isConnected : false,
     "init" : () => {
 
@@ -29,24 +31,21 @@ let app = {
             document.body.style.overflowX = "hidden";
         }
 
-        app.FilterItems.forEach(FilterItem => {
-            FilterItem.addEventListener( 'click', app.FilterProject);
-        });
+
 
         app.clearGallery();
+        app.getCategories();
         app.getWorks();
     },
     "editHandler" : () => {
-        console.log('edit..');
         const ModalContainerElm = document.querySelector('.ModalContainer');
         const PhotosList = document.querySelector('.PhotosList');
-        const CrossButton = document.querySelector('.cross');
+        const CrossButton = document.querySelector('.Cross');
 
         CrossButton.addEventListener('click', app.removeModal);
 
 
         app.Projects.forEach(P => {
-            console.log(P);
             const PhotoListItemElm = document.createElement('div');
             const PhotoListItemImg = document.createElement('img');
             const DelPhotoElm = document.createElement('button');
@@ -66,46 +65,76 @@ let app = {
             BEditElm.textContent = "éditer";
 
             DelPhotoElm.appendChild(ImgTrashElm);
+            DelPhotoElm.addEventListener('click', app.removeProject);
 
             PhotoListItemElm.appendChild(PhotoListItemImg);
             PhotoListItemElm.appendChild(BEditElm);
             PhotoListItemElm.appendChild(DelPhotoElm);
+            PhotoListItemElm.id = P.id;
 
             PhotosList.appendChild(PhotoListItemElm);
         });
-
-
-
 
         ModalContainerElm.style.display = "flex";
     },
     "removeModal" : () => {
         const ModalContainerElm = document.querySelector('.ModalContainer');
+        const PhotosList = document.querySelector('.PhotosList');
+
+        PhotosList.innerHTML = "";
         ModalContainerElm.style.display = "none";
     },
-    "FilterProject" : (e) => {
-        const CurrentFilter = e.currentTarget;
-        const CurrentCategory = CurrentFilter.innerText
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "");
+    "removeProject" : (e) => {
+        let idCurrentElm = parseInt(e.currentTarget.parentElement.id);
+        const NbProjects = app.Projects.childElementCount;
 
-        app.FilterItems.forEach(FilterItem => {
+        console.log(idCurrentElm);
+        e.currentTarget.parentElement.parentNode.removeChild(e.currentTarget.parentElement);
+        app.Projects.forEach((P, index) => {
+            if(P.id === idCurrentElm)
+                app.Projects.splice(index, 1);
+        })
+
+        app.clearGallery();
+        app.FilterProject(app.CurrentCategory);
+    },
+    "FilterProject" : (CatName) => {
+
+        console.log(CatName);
+        document.querySelectorAll('.FilterItem').forEach(FilterItem => {
             FilterItem.className = "FilterItem";
-            CurrentFilter.className = "FilterItem CurrentFilter";
+            if(FilterItem.textContent === CatName)
+            {
+                FilterItem.className += " CurrentFilter";
+            }
         });
 
         app.clearGallery();
 
-        if(CurrentCategory !== "Tous")
+        if(CatName !== "Tous")
         {
             app.Projects.filter(item =>
-                item.category.name === CurrentCategory)
+                item.category.name === CatName)
                 .forEach(Project => app.createElmProjects(Project));
         }
         else
-        {
             app.Projects.forEach(Project => app.createElmProjects(Project) );
-        }
+
+        app.CurrentCategory = CatName;
+    },
+    "getCategories" : () => {
+        const URL = "/categories";
+        const Method = "GET";
+        const CatTous = {"id" : 0, "name" : "Tous"};
+
+        app.createCategoriesElm(CatTous);
+
+        app.fetchAPI(URL, Method).then(res => {
+            res.forEach(Cat => {
+                app.createCategoriesElm(Cat);
+                app.Categories.push(Cat);
+            });
+        });
     },
     "getWorks" : () => {
         const URL = "/works";
@@ -131,6 +160,27 @@ let app = {
             FigureElm.appendChild(FigCaptionElm);
 
             app.Gallery.appendChild(FigureElm);
+    },
+    "createCategoriesElm" : (Cat) => {
+        const FilterMenuElm = document.querySelector('.FilterProjects_Menu');
+        let LiElm = document.createElement('li');
+        const LiClassName = "FilterItem";
+        const LiClassName_CurrentFitler = "CurrentFilter";
+        let CatName = Cat.name;
+
+        if(Cat.name === "Hotels & restaurants")
+            CatName = "Hôtels & restaurants";
+
+        if(CatName === "Tous")
+            LiElm.className = LiClassName+" "+LiClassName_CurrentFitler;
+        else
+        LiElm.className = LiClassName;
+
+        LiElm.textContent = CatName;
+
+        LiElm.addEventListener('click', () => (app.FilterProject(CatName) ));
+
+        FilterMenuElm.appendChild(LiElm);
     },
     "clearGallery" : () => {
         app.Gallery.innerHTML = '';

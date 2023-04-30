@@ -13,8 +13,8 @@
 }
 .ModalEdit
 {
-    width:500px;
-    min-height:500px;
+    width:40%;
+    height: 650px;
     position:absolute;
     top:50%;
     left:50%;
@@ -29,18 +29,18 @@
 
 .ModalEdit_Container, .PhotosList
 {
-    width:80%;
-    height:100%;
+    width:89%;
+    height:650px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: start;
+    align-items: start;
 }
 .ModalEdit_Container
 {
-    position:relative;
-    border:1px solid red;
+    position: relative;
 }
+
 .ModalEdit h3
 {
     width:100%;
@@ -49,15 +49,16 @@
     margin-top:40px;
     margin-bottom:40px;
 }
-.ModalEdit .fa-sharp
+.Cross
 {
     position:absolute;
     right:30px;
     top:30px;
-    font-size: 15px;
+    font-size: 20px;
     cursor:pointer;
+    z-index: 10;
 }
-.ModalEdit .fa-sharp:hover
+.Cross:hover
 {
     font-weight: bold;
 }
@@ -68,16 +69,17 @@
     width:100%;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: start;
+    padding-left:35px;
+    align-content: flex-start;
 }
 
 .PhotoList_Item
 {
-    width: calc(100% / 5.9);
+    width: 78px;
     min-height: 104px;
-    margin:5px;
+    margin:7px;
     position:relative;
-    border:1px solid red;
 }
 .PhotoList_Item img
 {
@@ -152,6 +154,7 @@
     position:absolute;
     right:5px;
     top:6px;
+    cursor: pointer;
 }
 .Trash
 {
