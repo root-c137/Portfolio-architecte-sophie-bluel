@@ -85,6 +85,7 @@
     padding-left: 50px;
     padding-bottom: 50px;
     border-bottom: 1px solid #B3B3B3;
+    overflow: auto;
 }
 
 .PhotoList_Item
