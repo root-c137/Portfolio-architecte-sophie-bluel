@@ -20,7 +20,7 @@ let app = {
     "init" : () => {
 
         if(localStorage.getItem('token') )
-            app.isConnected = !app.isConnected;
+            app.isConnected = true;
 
         if(app.isConnected)
         {
@@ -52,6 +52,7 @@ let app = {
             });
         }
 
+        app.Projects = [];
         app.clearGallery();
         app.getCategories();
         app.getWorks();
@@ -91,7 +92,10 @@ let app = {
             const Method = "POST";
 
             app.fetchAPI(URL, Method, formD, app.Token, "multipart/form-data").then(res => {
-                console.log(res);
+                if(res)
+                {
+                    app.removeAddProjectSection();
+                }
             });
 
         }
@@ -121,6 +125,7 @@ let app = {
         const CrossButton = document.querySelector('.Cross');
 
         CrossButton.addEventListener('click', app.removeModal);
+        PhotosList.innerHTML = "";
         app.LeftArrow.addEventListener('click', app.removeAddProjectSection);
 
 
@@ -165,6 +170,9 @@ let app = {
         app.GallerySectionModal.style.display = "block";
         app.AddProjectSectionModal.style.display = "none";
         app.LeftArrow.style.visibility = "hidden";
+
+        app.removeModal();
+        app.init();
     },
     "removeAllProjects" : (e) => {
         e.preventDefault();
@@ -212,6 +220,9 @@ let app = {
             FilterItem.className = "FilterItem";
             if(FilterItem.textContent === CatName)
             {
+                if(CatName === "Hôtels & restaurants")
+                    CatName = "Hotels & restaurants";
+
                 FilterItem.className += " CurrentFilter";
             }
         });
@@ -233,7 +244,9 @@ let app = {
         const URL = "/categories";
         const Method = "GET";
         const CatTous = {"id" : 0, "name" : "Tous"};
+        const FilterMenuItem = document.querySelector('.FilterProjects_Menu');
 
+        FilterMenuItem.innerHTML = "";
         app.createCategoriesElm(CatTous);
 
         app.fetchAPI(URL, Method).then(res => {
@@ -248,6 +261,7 @@ let app = {
         const Method = "GET";
         app.fetchAPI(URL, Method).then(res =>{
             res.forEach(Project => {
+                console.log(Project);
                 app.createElmProjects(Project);
                 app.Projects.push(Project);
             });
@@ -275,13 +289,16 @@ let app = {
         const LiClassName_CurrentFitler = "CurrentFilter";
         let CatName = Cat.name;
 
-        if(Cat.name === "Hotels & restaurants")
-            CatName = "Hôtels & restaurants";
+
+
 
         if(CatName === "Tous")
             LiElm.className = LiClassName+" "+LiClassName_CurrentFitler;
         else
         LiElm.className = LiClassName;
+
+        if(Cat.name === "Hotels & restaurants")
+        CatName = "Hôtels & restaurants";
 
         LiElm.textContent = CatName;
 
