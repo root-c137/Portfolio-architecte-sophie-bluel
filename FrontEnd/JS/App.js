@@ -14,6 +14,9 @@ let app = {
     Token : localStorage.getItem('token'),
     UserId : localStorage.getItem('userId'),
     Src : null,
+    BEditGroup: document.querySelectorAll('.BEditGroup'),
+    TopBarEditMode : document.querySelector('.TopBar'),
+    Header : document.getElementsByTagName("header")[0],
     "init" : () => {
 
         if(localStorage.getItem('token') )
@@ -21,28 +24,41 @@ let app = {
 
         if(app.isConnected)
         {
-            const TopBar = document.querySelector('.TopBar');
-            const Header = document.getElementsByTagName("header")[0];
-            const BEditGroup = document.querySelectorAll('.BEditGroup');
             const BEditProjects = document.querySelector('.BEditProjects');
+            const LoginLink = document.querySelector('.LoginLink');
 
-            TopBar.style.display = "flex";
-            Header.style.position = "relative";
-            Header.style.paddingTop = "40px";
+            app.TopBarEditMode.style.display = "flex";
+            app.Header.style.position = "relative";
+            app.Header.style.paddingTop = "40px";
+            LoginLink.textContent = "logout";
+            LoginLink.href = "./index.html";
 
-            BEditGroup.forEach(Elm => {
+            app.BEditGroup.forEach(Elm => {
                 Elm.style.display = "flex";
             });
+
+            LoginLink.addEventListener('click', app.logOut);
 
             BEditProjects.addEventListener('click', app.editHandler);
             app.BAddPhoto.addEventListener('click', app.addPhotoForm);
             document.body.style.overflowX = "hidden";
         }
-
+        else
+        {
+            app.TopBarEditMode.style.display = "none";
+            app.Header.style.paddingTop = "0";
+            app.BEditGroup.forEach(Elm => {
+                Elm.style.display = "none";
+            });
+        }
 
         app.clearGallery();
         app.getCategories();
         app.getWorks();
+    },
+    "logOut" : () => {
+        localStorage.clear();
+        app.init();
     },
     "addPhotoForm" : () => {
         app.GallerySectionModal.style.display = "none";

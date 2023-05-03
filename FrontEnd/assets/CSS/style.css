@@ -96,7 +96,7 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
+.MenuLink:hover {
 	color: #B1663C;
 }
 
