@@ -52,6 +52,7 @@ let app = {
             });
         }
 
+
         app.Projects = [];
         app.clearGallery();
         app.getCategories();
@@ -62,6 +63,8 @@ let app = {
         app.init();
     },
     "addPhotoForm" : () => {
+
+        console.log('add photo form..');
         app.GallerySectionModal.style.display = "none";
         app.AddProjectSectionModal.style.display = "flex";
         app.LeftArrow.style.visibility = "visible";
@@ -69,10 +72,13 @@ let app = {
         const BSubmitProject = document.querySelector('.BSubmitProject');
         BSubmitProject.addEventListener('click', app.addNewProject);
 
+        app.LeftArrow.addEventListener('click', app.editHandler);
 
-        console.log('add');
+
     },
     "addNewProject" : () => {
+
+        console.log("Add new...");
         const Image = document.querySelector('#Photo');
         const TitleInput = document.querySelector('#Title');
         const Category = document.querySelector('#Category');
@@ -120,13 +126,17 @@ let app = {
         }
     },
     "editHandler" : () => {
+
+        console.log('edit handler..');
         const ModalContainerElm = document.querySelector('.ModalContainer');
         const PhotosList = document.querySelector('.PhotosList');
         const CrossButton = document.querySelector('.Cross');
+        app.GallerySectionModal.style.display = "block";
+        app.AddProjectSectionModal.style.display = "none";
+
 
         CrossButton.addEventListener('click', app.removeModal);
         PhotosList.innerHTML = "";
-        app.LeftArrow.addEventListener('click', app.removeAddProjectSection);
 
 
         app.Projects.forEach(P => {
