@@ -3,6 +3,7 @@ let app = {
     URL_API_Base : "http://localhost:5678/api",
     FilterItems : document.querySelectorAll('.FilterItem'),
     Gallery : document.querySelector('.gallery'),
+    FilterProjectcs : document.querySelector('.FilterProjects'),
     Projects : [],
     Categories : [],
     CurrentCategory : "Tous",
@@ -17,6 +18,16 @@ let app = {
     BEditGroup: document.querySelectorAll('.BEditGroup'),
     TopBarEditMode : document.querySelector('.TopBar'),
     Header : document.getElementsByTagName("header")[0],
+    Image : document.querySelector('#Photo'),
+    TitleInput : document.querySelector('#Title'),
+    Category : document.querySelector('#Category'),
+    BSubmitProject : document.querySelector('.BSubmitProject'),
+    PreviewImgElm : document.querySelector('.ImagePreview'),
+    BUploadGroup : document.querySelector('.ButtonUploadGroup'),
+    ImageIsOK : false,
+    TitleIsOK : false,
+    CatIsOK : false,
+
     "init" : () => {
 
         if(localStorage.getItem('token') )
@@ -33,6 +44,8 @@ let app = {
             LoginLink.textContent = "logout";
             LoginLink.href = "./index.html";
 
+            app.FilterProjectcs.style.visibility = "hidden";
+
             app.BEditGroup.forEach(Elm => {
                 Elm.style.display = "flex";
             });
@@ -45,6 +58,7 @@ let app = {
         }
         else
         {
+            app.FilterProjectcs.style.display = "visible";
             app.TopBarEditMode.style.display = "none";
             app.Header.style.paddingTop = "0";
             app.BEditGroup.forEach(Elm => {
@@ -69,30 +83,49 @@ let app = {
         app.AddProjectSectionModal.style.display = "flex";
         app.LeftArrow.style.visibility = "visible";
 
-        const BSubmitProject = document.querySelector('.BSubmitProject');
-        BSubmitProject.addEventListener('click', app.addNewProject);
+        app.BSubmitProject.disabled = true;
+        app.BSubmitProject.addEventListener('click', app.addNewProject);
+        app.Image.addEventListener('change', app.imageIsOK );
+        app.TitleInput.addEventListener('input', app.titleIsOK );
+        app.Category.addEventListener('change', app.catIsOK );
 
         app.LeftArrow.addEventListener('click', app.editHandler);
+    },
+    "imageIsOK" : () =>
+    {
+        app.ImageIsOK = true;
+        app.enableSubmitButton();
+    },
+    "titleIsOK" : (e) => {
+        if(e.currentTarget.value.length > 0)
+            app.TitleIsOK = true;
+        else
+            app.TitleIsOK = false;
 
+        app.enableSubmitButton();
+    },
+    "catIsOK" : (e) =>
+    {
+        if(e.currentTarget.value.length > 0)
+            app.CatIsOK = true;
 
+        app.enableSubmitButton();
+    },
+    "enableSubmitButton" : () =>
+    {
+        if(app.TitleIsOK && app.CatIsOK && app.ImageIsOK)
+            app.BSubmitProject.disabled = false;
     },
     "addNewProject" : () => {
 
-        console.log("Add new...");
-        const Image = document.querySelector('#Photo');
-        const TitleInput = document.querySelector('#Title');
-        const Category = document.querySelector('#Category');
-
-        if(Image.src !== null && TitleInput.value.length > 0 &&
-            Category.options.selectedIndex > 0)
+        if(app.Image.src !== null && app.TitleInput.value.length > 0 &&
+            app.Category.options.selectedIndex > 0)
         {
-            console.log(TitleInput.value.toString());
 
             let formD = new FormData();
-            formD.append("image", Image.files[0]);
-            formD.append("title", TitleInput.value.toString());
-            formD.append("category", Category.options.selectedIndex.toString());
-
+            formD.append("image", app.Image.files[0]);
+            formD.append("title", app.TitleInput.value.toString());
+            formD.append("category", app.Category.options.selectedIndex.toString());
 
             const URL = "/works";
             const Method = "POST";
@@ -100,13 +133,15 @@ let app = {
             app.fetchAPI(URL, Method, formD, app.Token, "multipart/form-data").then(res => {
                 if(res)
                 {
+                    app.PreviewImgElm.style.display = "none";
+                    app.BUploadGroup.style.display = "flex";
+                    app.PreviewImgElm.src = "#";
                     app.removeAddProjectSection();
                 }
             });
 
         }
-        else
-        console.log('il faut remplir les champs..');
+
     },
     "imageUpload" : (e) => {
         if(e.target.files.length > 0)
@@ -114,15 +149,12 @@ let app = {
             console.log(e.target.files);
             let src = URL.createObjectURL(e.target.files[0]);
             app.Src = e.target.files[0];
-            let PreviewImgElm = document.querySelector('.ImagePreview');
-            const BUploadGroup = document.querySelector('.ButtonUploadGroup');
             const BSumbitProject = document.querySelector('.BSubmitProject');
 
-            PreviewImgElm.style.display = "block";
-            PreviewImgElm.src = src;
-            PreviewImgElm.alt = e.target.files[0].name;
-            BUploadGroup.style.display = "none";
-            BSumbitProject.disabled = false;
+            app.PreviewImgElm.style.display = "block";
+            app.PreviewImgElm.src = src;
+            app.PreviewImgElm.alt = e.target.files[0].name;
+            app.BUploadGroup.style.display = "none";
         }
     },
     "editHandler" : () => {
