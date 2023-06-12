@@ -185,12 +185,25 @@ let app = {
         app.init();
     },
     "removeAllProjects" : (e) => {
+
         e.preventDefault();
+        console.log(app.Projects);
+
+
+        for(let i = 0; i < app.Projects.length; i++) {
+            app.fetchAPI("/works/"+app.Projects[i].id, "DELETE", i, app.Token).then(res => {
+                console.log(res);
+            })
+
+            console.log(i);
+        }
 
         app.Projects = [];
         app.clearGallery();
         app.FilterProject(app.CurrentCategory);
         document.querySelector('.PhotosList').innerHTML = '';
+
+
     },
     "removeModal" : () => {
         const ModalContainerElm = document.querySelector('.ModalContainer');
@@ -199,13 +212,19 @@ let app = {
         PhotosList.innerHTML = "";
         ModalContainerElm.style.display = "none";
     },
-    "removeProject" : (e) => {
+    "removeProject" : (e, id = null) => {
 
 
-            let idCurrentElm = parseInt(e.currentTarget.parentElement.id);
+            let idCurrentElm = null;
+            if(id !== null)
+                idCurrentElm = id;
+            else
+                idCurrentElm = parseInt(e.currentTarget.parentElement.id);
+
+
             const NbProjects = app.Projects.childElementCount;
 
-            console.log(idCurrentElm);
+            console.log("idelem : "+idCurrentElm);
             e.currentTarget.parentElement.parentNode.removeChild(e.currentTarget.parentElement);
             app.Projects.forEach((P, index) => {
                 if (P.id === idCurrentElm)
@@ -215,8 +234,8 @@ let app = {
         const Method = "DELETE";
         const URL = "/works/"+idCurrentElm;
 
-        app.fetchAPI(URL, Method, null, app.Token).then(res => {
-            console.log(res);
+        app.fetchAPI(URL, Method, idCurrentElm, app.Token).then(res => {
+                console.log(res);
         });
 
         app.clearGallery();
@@ -345,7 +364,7 @@ let app = {
 
         return fetch(CurrentURL, Init)
             .then(res => {
-                return res.json();
+               return res.json();
             })
     }
 }
