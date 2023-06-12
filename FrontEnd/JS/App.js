@@ -133,6 +133,7 @@ let app = {
         const CrossButton = document.querySelector('.Cross');
         app.GallerySectionModal.style.display = "block";
         app.AddProjectSectionModal.style.display = "none";
+        app.LeftArrow.style.visibility = "hidden";
 
 
         CrossButton.addEventListener('click', app.removeModal);
